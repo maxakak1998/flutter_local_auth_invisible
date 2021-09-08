@@ -3,14 +3,14 @@
 // found in the LICENSE file.
 #import <LocalAuthentication/LocalAuthentication.h>
 
-#import "FLTLocalAuthPlugin.h"
+#import "FLTLocalAuthInvisiblePlugin.h"
 
 @interface FLTLocalAuthPlugin ()
 @property(copy, nullable) NSDictionary<NSString *, NSNumber *> *lastCallArgs;
 @property(nullable) FlutterResult lastResult;
 @end
 
-@implementation FLTLocalAuthPlugin
+@implementation FLTLocalAuthInvisiblePlugin
 
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
   FlutterMethodChannel *channel =

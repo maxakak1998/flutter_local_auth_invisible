@@ -4,5 +4,5 @@
 
 #import <Flutter/Flutter.h>
 
-@interface FLTLocalAuthPlugin : NSObject <FlutterPlugin>
+@interface FLTLocalAuthInvisiblePlugin : NSObject <FlutterPlugin>
 @end
