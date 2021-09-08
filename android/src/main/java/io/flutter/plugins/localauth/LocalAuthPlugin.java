@@ -1,8 +1,7 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+package android.src.main.java.io.flutter.plugins.localauth;// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package io.flutter.plugins.localauth;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -30,7 +29,7 @@ public class LocalAuthPlugin implements MethodCallHandler {
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel =
-        new MethodChannel(registrar.messenger(), "plugins.flutter.io/local_auth");
+        new MethodChannel(registrar.messenger(), "plugins.flutter.io/local_auth_invisible");
     channel.setMethodCallHandler(new LocalAuthPlugin(registrar));
   }
 

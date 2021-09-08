@@ -13,7 +13,7 @@ import 'error_codes.dart';
 
 enum BiometricType { face, fingerprint, iris }
 
-const MethodChannel _channel = MethodChannel('plugins.flutter.io/local_auth');
+const MethodChannel _channel = MethodChannel('plugins.flutter.io/local_auth_invisible');
 
 Platform _platform = const LocalPlatform();
 

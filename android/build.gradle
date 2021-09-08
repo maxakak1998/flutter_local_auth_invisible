@@ -1,4 +1,4 @@
-group 'io.flutter.plugins.localauth'
+group "io.flutter.plugins.local_auth"
 version '1.0-SNAPSHOT'
 
 buildscript {
