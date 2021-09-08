@@ -12,7 +12,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: io.flutter.plugins.localauth
+        package: io.flutter.plugins.localauth_invisible
         pluginClass: LocalAuthPlugin
       ios:
         pluginClass: FLTLocalAuthPlugin
