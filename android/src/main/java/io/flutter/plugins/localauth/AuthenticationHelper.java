@@ -25,6 +25,7 @@ import android.widget.TextView;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
 import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugins.local_auth_invisible.R;
 
 /**
  * Authenticates the user with fingerprint and sends corresponding response back to Flutter.
