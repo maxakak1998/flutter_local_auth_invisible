@@ -100,8 +100,6 @@ class AuthenticationHelper extends FingerprintManagerCompat.AuthenticationCallba
       if (keyguardManager.isKeyguardSecure() && fingerprintManager.hasEnrolledFingerprints()) {
         start();
       } else {
-        logDebug("Call " + call.argument ==null);
-
         if (call.argument("useErrorDialogs")) {
           showGoToSettingsDialog();
         } else if (!keyguardManager.isKeyguardSecure()) {
