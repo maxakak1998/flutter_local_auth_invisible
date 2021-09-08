@@ -5,7 +5,7 @@
 
 #import "FLTLocalAuthInvisiblePlugin.h"
 
-@interface FLTLocalAuthPlugin ()
+@interface FLTLocalAuthInvisiblePlugin ()
 @property(copy, nullable) NSDictionary<NSString *, NSNumber *> *lastCallArgs;
 @property(nullable) FlutterResult lastResult;
 @end
@@ -16,7 +16,7 @@
   FlutterMethodChannel *channel =
       [FlutterMethodChannel methodChannelWithName:@"plugins.flutter.io/local_auth_invisible"
                                   binaryMessenger:[registrar messenger]];
-  FLTLocalAuthPlugin *instance = [[FLTLocalAuthPlugin alloc] init];
+  FLTLocalAuthInvisiblePlugin *instance = [[FLTLocalAuthInvisiblePlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
   [registrar addApplicationDelegate:instance];
 }
