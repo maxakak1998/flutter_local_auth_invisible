@@ -25,6 +25,7 @@ import android.widget.TextView;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
 import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugins.local_auth_invisible.R;
 
 /**
@@ -93,11 +94,14 @@ class AuthenticationHelper extends FingerprintManagerCompat.AuthenticationCallba
 
   void authenticate() {
     Log.d("AuthenticationHelper", "Start authentication");
+
     if (fingerprintManager.isHardwareDetected()) {
 
       if (keyguardManager.isKeyguardSecure() && fingerprintManager.hasEnrolledFingerprints()) {
         start();
       } else {
+        logDebug("Call " + call.argument ==null);
+
         if (call.argument("useErrorDialogs")) {
           showGoToSettingsDialog();
         } else if (!keyguardManager.isKeyguardSecure()) {

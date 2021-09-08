@@ -79,6 +79,7 @@ class LocalAuthentication {
       'localizedReason': localizedReason,
       'stickyAuth': stickyAuth,
       'sensitiveTransaction': sensitiveTransaction,
+      "useErrorDialogs":useErrorDialogs
     };
     if (_platform.isIOS) {
       args.addAll(iOSAuthStrings.args);
