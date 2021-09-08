@@ -15,7 +15,7 @@ flutter:
         package: io.flutter.plugins.localauth_invisible
         pluginClass: LocalAuthPlugin
       ios:
-        pluginClass: FLTLocalAuthPlugin
+        pluginClass: FLTLocalAuthInvisiblePlugin
 
 dependencies:
   flutter:
