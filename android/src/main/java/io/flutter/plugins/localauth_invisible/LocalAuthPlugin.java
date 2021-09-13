@@ -4,11 +4,15 @@ package io.flutter.plugins.localauth_invisible;// Copyright 2017 The Chromium Au
 
 
 import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -50,6 +54,11 @@ public class LocalAuthPlugin implements MethodCallHandler {
 
   @Override
   public void onMethodCall(MethodCall call, final Result result) {
+    Activity activity = registrar.activity();
+    if (activity == null || activity.isFinishing()) {
+      result.error("no_activity", "local_auth plugin requires a foreground activity", null);
+      return;
+    }
     if (call.method.equals("authenticateWithBiometrics")) {
       if (!authInProgress.compareAndSet(false, true)) {
         stopCurrentAuthentication();
@@ -70,11 +79,7 @@ public class LocalAuthPlugin implements MethodCallHandler {
 
       handler.postDelayed(delayRunnable, maxTimeoutMillis);
 
-      Activity activity = registrar.activity();
-      if (activity == null || activity.isFinishing()) {
-        result.error("no_activity", "local_auth plugin requires a foreground activity", null);
-        return;
-      }
+
       authenticationHelper =
           new AuthenticationHelper(
               activity,
@@ -104,16 +109,7 @@ public class LocalAuthPlugin implements MethodCallHandler {
       authenticationHelper.authenticate();
     } else if (call.method.equals("getAvailableBiometrics")) {
       try {
-        ArrayList<String> biometrics = new ArrayList<String>();
-        FingerprintManagerCompat fingerprintMgr =
-            FingerprintManagerCompat.from(registrar.activity());
-        if (fingerprintMgr.isHardwareDetected()) {
-          if (fingerprintMgr.hasEnrolledFingerprints()) {
-            biometrics.add("fingerprint");
-          } else {
-            biometrics.add("undefined");
-          }
-        }
+        getAvailableBiometrics(result, (FragmentActivity)activity);
         result.success(biometrics);
       } catch (Exception e) {
         result.error("no_biometrics_available", e.getMessage(), null);
@@ -125,6 +121,41 @@ public class LocalAuthPlugin implements MethodCallHandler {
     } else {
       result.notImplemented();
     }
+  }
+  private void getAvailableBiometrics(final Result result,FragmentActivity activity) {
+    try {
+      if (activity == null || activity.isFinishing()) {
+        result.error("no_activity", "local_auth plugin requires a foreground activity", null);
+        return;
+      }
+      ArrayList<String> biometrics = getAvailableBiometrics(activity);
+      result.success(biometrics);
+    } catch (Exception e) {
+      result.error("no_biometrics_available", e.getMessage(), null);
+    }
+  }
+
+  private ArrayList<String> getAvailableBiometrics(FragmentActivity activity) {
+    ArrayList<String> biometrics = new ArrayList<>();
+    if (activity == null || activity.isFinishing()) {
+      return biometrics;
+    }
+    PackageManager packageManager = activity.getPackageManager();
+    if (Build.VERSION.SDK_INT >= 23) {
+      if (packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)) {
+        biometrics.add("fingerprint");
+      }
+    }
+    if (Build.VERSION.SDK_INT >= 29) {
+      if (packageManager.hasSystemFeature(PackageManager.FEATURE_FACE)) {
+        biometrics.add("face");
+      }
+      if (packageManager.hasSystemFeature(PackageManager.FEATURE_IRIS)) {
+        biometrics.add("iris");
+      }
+    }
+
+    return biometrics;
   }
 
   private void stopCurrentAuthentication() {

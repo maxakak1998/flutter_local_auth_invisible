@@ -34,5 +34,6 @@ android {
 }
 
 dependencies {
-    api "androidx.core:core:1.1.0-alpha03"
+    api "androidx.biometric:biometric:1.1.0"
+
 }
